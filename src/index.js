@@ -17,10 +17,22 @@ function createLine( id, lineText, isDone ){
     div.classList.add('list__list-line');
     input.type = 'checkbox';
     input.checked = isDone || false;
+    input.addEventListener('change', switchState);
     text.classList.add('list__list-line-text');
     button.classList.add('list__line-delete-button');
     text.innerText = lineText;
     button.innerText = 'X';
+
+    function switchState() {                                            // make with closure
+        let checkbox = parseInt(this.parentNode.id.slice(5));
+        todoList.forEach((line) => {
+            if (line.id == checkbox) {
+                line.isDone = !line.isDone;
+
+            }
+        })
+        console.log(todoList);
+    }
 
     div.appendChild(input);
     div.appendChild(text);
@@ -28,23 +40,25 @@ function createLine( id, lineText, isDone ){
 
     return div;
 }
-let list = document.querySelector('.list__list');
-todoList.forEach((line) => {
-    const elem = createLine(line.id,line.text, line.isDone);
-    list.appendChild(elem);
-});
 
 function addTodoItem(){
     let newTodo=document.querySelector('.list__new-input');
     if (newTodo.value.match(/\w+/)) {
         todoList.push({id: (todoList.length + 1), text: newTodo.value, isDone: false});
         const elem = createLine(todoList.length, newTodo.value, false);
+
         list.appendChild(elem);
     }
     newTodo.value = '';
 }
 
+
+
 let addButton=document.querySelector('.list__new-button');
 addButton.addEventListener('click', addTodoItem);
 
-
+let list = document.querySelector('.list__list');
+todoList.forEach((line) => {
+    const elem = createLine(line.id,line.text, line.isDone);
+    list.appendChild(elem);
+});
