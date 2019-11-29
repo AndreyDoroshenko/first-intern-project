@@ -10,11 +10,88 @@ body {
     background-size: 100%;
 }
 
-.container {
-    min-height: 100vh;
-    min-width: 100vw;
+.list {
+    min-width: 100px;
+    max-width: 400px;
+    width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    align-content: space-between;
+    font-weight: bold;
+    margin-right: auto;
+    margin-left: auto;
 }
+
+.list__list{
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+}
+
+.list__header {
+    width: 100%;
+    text-align: left;
+    margin: 0;
+}
+
+.list__list-line{
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.list__list-line-text {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.list__new{
+    margin-top: 3px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list__filter{
+    display: flex;
+    margin-top: 10px;
+    width: 60%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.list__filter-value{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+.list__new-input {
+    flex: 1 0 0;
+}
+
+.list__new-button {
+    margin-left: 10px;
+}
+
+.list__list-line-delete-button {
+
+}
+
+
+
+
+
