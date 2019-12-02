@@ -48,10 +48,6 @@ body {
     justify-content: space-between;
 }
 
-.list__list-line-hidden{
-    display: none;
-}
-
 .list__list-line-text {
     flex-grow: 1;
     text-align: left;
@@ -82,7 +78,6 @@ body {
     margin-right: 5px;
 }
 
-
 .list__new-input {
     flex: 1 0 0;
 }
@@ -93,6 +88,12 @@ body {
 
 .list__list-line-delete-button {
 
+}
+
+.list__filter-chosen {
+    color: black;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 

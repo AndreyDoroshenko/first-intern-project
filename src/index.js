@@ -46,7 +46,15 @@ const switchState = (id) => () => {
         const edited = todoList.find((line) => line.id === id);
         if (edited) {
             edited.isDone = !edited.isDone;
-            updateData(false);
+            updateData();
+
+        }
+        const line = document.getElementById('list-'+id);
+        const input = line.firstChild;
+        if ((input.checked === true && activeFilter === 'Active') || ( input.checked === false && activeFilter === 'Completed'))  {
+            line.className = 'list__list-line-hidden';
+        } else {
+            line.className = 'list__list-line';
         }
 };
 
@@ -61,11 +69,11 @@ function addTodoItem() {
     newTodo.value = '';
 }
 
-function unHide(classes, hideClass) {
+function deleteClass(classes, classToDelete) {
     const lineNewClass = classes.split(' ');
-    console.log();
-    if (lineNewClass.indexOf(hideClass) !== -1) {
-        lineNewClass.splice(lineNewClass.indexOf(hideClass),1);
+    console.log(classes);
+    if (lineNewClass.indexOf(classToDelete) !== -1) {
+        lineNewClass.splice(lineNewClass.indexOf(classToDelete),1);
     }
     classes = lineNewClass.join(' ');
     return classes;
@@ -73,16 +81,10 @@ function unHide(classes, hideClass) {
 
 function setFilterTo (e) {
     activeFilter= e.target.name;
-    let filterList = document.getElementsByClassName('list__list-line');
-    for(let i = 0 ; i < filterList.length ; i++) {
-        const input = filterList[i].firstChild;
-        if ((input.checked === true && activeFilter === 'Active') || ( input.checked === false && activeFilter === 'Completed'))  {
-            filterList[i].className += ' ' + 'list__list-line-hidden';
-            console.log();
-        } else {
-            filterList[i].className = unHide(filterList[i].className, 'list__list-line-hidden')
-        }
-    }
+    this.childNodes.forEach(node => {
+        node.className = 'list__filter-value';
+    });
+    e.target.className = 'list__filter-chosen';
 }
 
 let addButton = document.querySelector('.list__new-button');
@@ -91,7 +93,9 @@ addButton.addEventListener('click', addTodoItem);
 let filter = document.querySelector('.list__filter');
 filter.addEventListener('click', setFilterTo);
 
-let activeFilter = 'Active';
+
+let activeFilter = 'All';
+
 
 let list = document.querySelector('.list__list');
 const todoList = getData();
