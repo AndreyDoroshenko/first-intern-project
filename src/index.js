@@ -2,7 +2,7 @@ import {messages} from './messages';
 // Подключение css
 import './css/styles.css';
 
-const todoList = [];
+
 
 function createLine(id, lineText, isDone) {
     let div = document.createElement('div');
@@ -14,6 +14,7 @@ function createLine(id, lineText, isDone) {
     input.type = 'checkbox';
     input.checked = isDone || false;
     input.addEventListener('change', switchState(id));
+    button.addEventListener('click', deleteLine(id));
     text.classList.add('list__list-line-text');
     button.classList.add('list__line-delete-button');
     text.innerText = lineText;
@@ -24,22 +25,28 @@ function createLine(id, lineText, isDone) {
     return div;
 }
 
-function updateData (record) {
-    const serialObj= JSON.stringify(record);
-    localStorage.setItem(record.id, serialObj);
+function updateData () {
+    const serialObj= JSON.stringify(todoList);
+    localStorage.setItem('List', serialObj);
 }
 
 function getData () {
-    for (let i=1; (JSON.parse((localStorage.getItem(i.toString())))); i++) {
-        todoList.push(JSON.parse((localStorage.getItem(i.toString()))));
-    }
+     return JSON.parse(localStorage.getItem('List')) || [];
+}
+
+const deleteLine = (id) => () => {
+    const div = document.getElementById('list-'+id);
+    div.remove();
+    const deleted = todoList.findIndex((line) => line.id === id);
+    todoList.splice(deleted, 1);
+    updateData();
 }
 
 const switchState = (id) => () => {
         const edited = todoList.find((line) => line.id === id);
         if (edited) {
             edited.isDone = !edited.isDone;
-            updateData(edited);
+            updateData(false);
         }
 };
 
@@ -48,10 +55,10 @@ function addTodoItem() {
     if (newTodo.value.match(/\w+/)) {
         todoList.push({id: (todoList.length + 1), text: newTodo.value, isDone: false});
         const elem = createLine(todoList.length, newTodo.value, false);
-        updateData({id: todoList.length, text: newTodo.value , isDone: false});
+        updateData(false);
         list.appendChild(elem);
-        console.log(todoList);
     }
+    console.log(todoList)
     newTodo.value = '';
 }
 
@@ -59,9 +66,10 @@ let addButton = document.querySelector('.list__new-button');
 addButton.addEventListener('click', addTodoItem);
 
 let list = document.querySelector('.list__list');
-getData();
-todoList.forEach((line) => {
-    const elem = createLine(line.id, line.text, line.isDone);
-    list.appendChild(elem);
-});
-
+const todoList = getData();
+if(todoList){
+    todoList.forEach((line) => {
+        const elem = createLine(line.id, line.text, line.isDone);
+        list.appendChild(elem);
+    });
+}
