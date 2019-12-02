@@ -40,7 +40,7 @@ const deleteLine = (id) => () => {
     const deleted = todoList.findIndex((line) => line.id === id);
     todoList.splice(deleted, 1);
     updateData();
-}
+};
 
 const switchState = (id) => () => {
         const edited = todoList.find((line) => line.id === id);
@@ -58,12 +58,40 @@ function addTodoItem() {
         updateData(false);
         list.appendChild(elem);
     }
-    console.log(todoList)
     newTodo.value = '';
+}
+
+function unHide(classes, hideClass) {
+    const lineNewClass = classes.split(' ');
+    console.log();
+    if (lineNewClass.indexOf(hideClass) !== -1) {
+        lineNewClass.splice(lineNewClass.indexOf(hideClass),1);
+    }
+    classes = lineNewClass.join(' ');
+    return classes;
+}
+
+function setFilterTo (e) {
+    activeFilter= e.target.name;
+    let filterList = document.getElementsByClassName('list__list-line');
+    for(let i = 0 ; i < filterList.length ; i++) {
+        const input = filterList[i].firstChild;
+        if ((input.checked === true && activeFilter === 'Active') || ( input.checked === false && activeFilter === 'Completed'))  {
+            filterList[i].className += ' ' + 'list__list-line-hidden';
+            console.log();
+        } else {
+            filterList[i].className = unHide(filterList[i].className, 'list__list-line-hidden')
+        }
+    }
 }
 
 let addButton = document.querySelector('.list__new-button');
 addButton.addEventListener('click', addTodoItem);
+
+let filter = document.querySelector('.list__filter');
+filter.addEventListener('click', setFilterTo);
+
+let activeFilter = 'Active';
 
 let list = document.querySelector('.list__list');
 const todoList = getData();
