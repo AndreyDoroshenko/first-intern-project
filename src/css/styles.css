@@ -10,7 +10,7 @@ body {
     background-size: 100%;
 }
 
-.list {
+.main {
     min-width: 100px;
     max-width: 400px;
     width: 40%;
@@ -24,22 +24,17 @@ body {
     margin-left: auto;
 }
 
-.list__list{
+.list {
     margin-top: 5px;
     width: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-
 }
 
-.list__header {
-    width: 100%;
-    text-align: left;
-    margin: 0;
-}
 
-.list__list-line{
+
+.list-line {
     display: flex;
     margin-top: 5px;
     width: 100%;
@@ -48,12 +43,27 @@ body {
     justify-content: space-between;
 }
 
-.list__list-line-text {
+.list_active > .list-line_completed,
+.list_completed > .list-line_active {
+    display: none;
+}
+
+.header {
+    width: 100%;
+    text-align: left;
+    margin: 0;
+}
+
+.list-line__text {
     flex-grow: 1;
     text-align: left;
 }
 
-.list__new{
+.list-line___delete-button {
+
+}
+
+.new {
     margin-top: 3px;
     width: 100%;
     display: flex;
@@ -63,7 +73,7 @@ body {
     justify-content: space-between;
 }
 
-.list__filter{
+.list__filter {
     display: flex;
     margin-top: 10px;
     width: 60%;
@@ -73,27 +83,25 @@ body {
     justify-content: center;
 }
 
-.list__filter-value{
+
+.filter__value {
     margin-left: 5px;
     margin-right: 5px;
 }
 
-.list__new-input {
+.new__input {
     flex: 1 0 0;
 }
 
-.list__new-button {
+.new__button {
     margin-left: 10px;
 }
 
-.list__list-line-delete-button {
-
-}
-
-.list__filter-chosen {
-    color: black;
+:target {
     margin-left: 5px;
     margin-right: 5px;
+    color: black;
+    text-decoration: none;
 }
 
 

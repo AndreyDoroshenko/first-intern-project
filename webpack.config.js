@@ -10,16 +10,16 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   enforce: 'pre',
-      //   exclude: /node_modules/,
-      //   test: /\.js$/,
-      //   loader: 'eslint-loader',
-      //   options: {
-      //     failOnError: true,
-      //     failOnWarning: true,
-      //   },
-      // },
+      {
+        enforce: 'pre',
+        exclude: /node_modules/,
+        test: /\.js$/,
+        loader: 'eslint-loader',
+        options: {
+          failOnError: true,
+          failOnWarning: true,
+        },
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
