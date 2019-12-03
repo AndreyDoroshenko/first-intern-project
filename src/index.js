@@ -41,7 +41,6 @@ function updateData() {
 function getData() {
   return JSON.parse(window.localStorage.getItem('List')) || [];
 }
-
 //  Удаление строки списка по нажатию кнопки
 const deleteLine = (id) => () => {
   const div = document.getElementById('list-' + id);
@@ -71,7 +70,7 @@ const switchState = (id) => () => {
 function addTodoItem() {
   const newTodo = document.querySelector('.new__input');
   if (newTodo.value.match(/\w+/)) {
-    todoList.push({ id: (todoList.length + 1), text: newTodo.value, isDone: false });
+    todoList.push({ id: (todoList[todoList.length - 1].id + 1), text: newTodo.value, isDone: false });
     const elem = createLine(todoList.length, newTodo.value, false);
     updateData(false);
     list.appendChild(elem);
@@ -95,12 +94,14 @@ function updateListByFilter(filter) {
     }
     case 'Completed': {
       const list = document.querySelector('.list');
-      list.className = 'list ' + 'list_completed';
+      list.classList.add('list');
+      list.classList.add('list_completed');
       break;
     }
     case 'Active': {
       const list = document.querySelector('.list');
-      list.className = 'list ' + 'list_active';
+      list.classList.add('list');
+      list.classList.add('list_active');
       break;
     }
   }
@@ -129,6 +130,7 @@ updateListByFilter(activeFilterByQuery);
 // Заполнение списка данными из LocalStorage
 const list = document.querySelector('.list');
 const todoList = getData();
+
 if (todoList) {
   todoList.forEach((line) => {
     const elem = createLine(line.id, line.text, line.isDone);
