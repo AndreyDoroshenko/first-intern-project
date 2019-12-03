@@ -1,107 +1,137 @@
-import {messages} from './messages';
 // Подключение css
 import './css/styles.css';
 
-
-
+//  Создание строки списка
 function createLine(id, lineText, isDone) {
-    let div = document.createElement('div');
-    div.id = 'list-' + id;
-    let input = document.createElement('input');
-    let text = document.createElement('div');
-    let button = document.createElement('button');
-    div.classList.add('list__list-line');
-    input.type = 'checkbox';
-    input.checked = isDone || false;
-    input.addEventListener('change', switchState(id));
-    button.addEventListener('click', deleteLine(id));
-    text.classList.add('list__list-line-text');
-    button.classList.add('list__line-delete-button');
-    text.innerText = lineText;
-    button.innerText = 'X';
-    div.appendChild(input);
-    div.appendChild(text);
-    div.appendChild(button);
-    return div;
+  const div = document.createElement('div');
+  div.id = 'list-' + id;
+  const input = document.createElement('input');
+  const text = document.createElement('div');
+  const button = document.createElement('button');
+  input.type = 'checkbox';
+  input.checked = isDone || false;
+  input.addEventListener('change', switchState(id));
+  button.addEventListener('click', deleteLine(id));
+  text.classList.add('list-line__text');
+  button.classList.add('list-line__delete-button');
+  text.innerText = lineText;
+  button.innerText = 'X';
+  if (input.checked === true) {
+    div.classList.add('list-line');
+    div.classList.add('list-line_completed');
+    //  div.className = 'list-line ' + 'list-line_completed';
+  } else {
+    div.classList.add('list-line');
+    div.classList.add('list-line_active');
+    //  div.className = 'list-line ' + 'list-line_active';
+  }
+  div.appendChild(input);
+  div.appendChild(text);
+  div.appendChild(button);
+  return div;
 }
 
-function updateData () {
-    const serialObj= JSON.stringify(todoList);
-    localStorage.setItem('List', serialObj);
+//  Обновление LocalStorage
+function updateData() {
+  const serialObj = JSON.stringify(todoList);
+  window.localStorage.setItem('List', serialObj);
 }
 
-function getData () {
-     return JSON.parse(localStorage.getItem('List')) || [];
+// Получение данных из LocalStorage
+function getData() {
+  return JSON.parse(window.localStorage.getItem('List')) || [];
 }
 
+//  Удаление строки списка по нажатию кнопки
 const deleteLine = (id) => () => {
-    const div = document.getElementById('list-'+id);
-    div.remove();
-    const deleted = todoList.findIndex((line) => line.id === id);
-    todoList.splice(deleted, 1);
-    updateData();
+  const div = document.getElementById('list-' + id);
+  div.remove();
+  const deleted = todoList.findIndex((line) => line.id === id);
+  todoList.splice(deleted, 1);
+  updateData();
 };
 
+// Смена состояния строки списка
 const switchState = (id) => () => {
-        const edited = todoList.find((line) => line.id === id);
-        if (edited) {
-            edited.isDone = !edited.isDone;
-            updateData();
-
-        }
-        const line = document.getElementById('list-'+id);
-        const input = line.firstChild;
-        if ((input.checked === true && activeFilter === 'Active') || ( input.checked === false && activeFilter === 'Completed'))  {
-            line.className = 'list__list-line-hidden';
-        } else {
-            line.className = 'list__list-line';
-        }
+  const edited = todoList.find((line) => line.id === id);
+  if (edited) {
+    edited.isDone = !edited.isDone;
+    updateData();
+  }
+  const line = document.getElementById('list-' + id);
+  const input = line.firstChild;
+  if (input.checked === true) {
+    line.className = 'list-line ' + 'list-line_completed';
+  } else {
+    line.className = 'list-line ' + 'list-line_active';
+  }
 };
 
+//  Добавление новой строки списка
 function addTodoItem() {
-    let newTodo = document.querySelector('.list__new-input');
-    if (newTodo.value.match(/\w+/)) {
-        todoList.push({id: (todoList.length + 1), text: newTodo.value, isDone: false});
-        const elem = createLine(todoList.length, newTodo.value, false);
-        updateData(false);
-        list.appendChild(elem);
+  const newTodo = document.querySelector('.new__input');
+  if (newTodo.value.match(/\w+/)) {
+    todoList.push({ id: (todoList.length + 1), text: newTodo.value, isDone: false });
+    const elem = createLine(todoList.length, newTodo.value, false);
+    updateData(false);
+    list.appendChild(elem);
+  }
+  newTodo.value = '';
+}
+
+//  Установка фильтра на новое значение
+function setFilterTo(e) {
+  const activeFilter = e.target.name;
+  updateListByFilter(activeFilter);
+}
+
+//  Обновление списка в соответствии с установленым в фильтре значением
+function updateListByFilter(filter) {
+  switch (filter) {
+    case 'All': {
+      const list = document.querySelector('.list');
+      list.className = 'list';
+      break;
     }
-    newTodo.value = '';
-}
-
-function deleteClass(classes, classToDelete) {
-    const lineNewClass = classes.split(' ');
-    console.log(classes);
-    if (lineNewClass.indexOf(classToDelete) !== -1) {
-        lineNewClass.splice(lineNewClass.indexOf(classToDelete),1);
+    case 'Completed': {
+      const list = document.querySelector('.list');
+      list.className = 'list ' + 'list_completed';
+      break;
     }
-    classes = lineNewClass.join(' ');
-    return classes;
+    case 'Active': {
+      const list = document.querySelector('.list');
+      list.className = 'list ' + 'list_active';
+      break;
+    }
+  }
 }
 
-function setFilterTo (e) {
-    activeFilter= e.target.name;
-    this.childNodes.forEach(node => {
-        node.className = 'list__filter-value';
-    });
-    e.target.className = 'list__filter-chosen';
-}
+//  Получение параметра из строки запросов в URL
+function getUrlParameter(name) {
+  name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+  const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  const results = regex.exec(window.location.search);
+  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
 
-let addButton = document.querySelector('.list__new-button');
+// Добавление обработчика для кнопки добавления строки в список
+const addButton = document.querySelector('.new__button');
 addButton.addEventListener('click', addTodoItem);
 
-let filter = document.querySelector('.list__filter');
+//  Добавление обработчика для фильтра
+const filter = document.querySelector('.filter');
 filter.addEventListener('click', setFilterTo);
 
+//  Получение стартового значения для фильтра
+const activeFilterByQuery = getUrlParameter('filter');
+updateListByFilter(activeFilterByQuery);
 
-let activeFilter = 'All';
-
-
-let list = document.querySelector('.list__list');
+// Заполнение списка данными из LocalStorage
+const list = document.querySelector('.list');
 const todoList = getData();
-if(todoList){
-    todoList.forEach((line) => {
-        const elem = createLine(line.id, line.text, line.isDone);
-        list.appendChild(elem);
-    });
+if (todoList) {
+  todoList.forEach((line) => {
+    const elem = createLine(line.id, line.text, line.isDone);
+    list.appendChild(elem);
+  });
 }

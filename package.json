@@ -4,6 +4,7 @@
   "description": "Test project for interns!",
   "main": "src/index.js",
   "scripts": {
+    "test": "eslint . && tap test/*.js",
     "serve": "webpack-dev-server --watch",
     "build": "echo 'No build command'"
   },

@@ -6,33 +6,17 @@
     <title>ToDo List</title>
 </head>
 <body>
-
-<div class="list">
-    <h1 class="list__header"> ToDo List</h1>
-    <div class="list__list">
-<!--        <div class="list__list-line">-->
-<!--            <input type="checkbox" />-->
-<!--            <div class="list__list-line-text">learn JS</div>-->
-<!--            <button class="list__line-delete-button">X</button>-->
-<!--        </div>-->
-<!--        <div class="list__list-line">-->
-<!--            <input type="checkbox" />-->
-<!--            <div class="list__list-line-text">Learn React</div>-->
-<!--            <button class="list__line-delete-button">X</button>-->
-
-<!--        </div>-->
-<!--        <div class="list__list-line">-->
-<!--            <input type="checkbox" />-->
-<!--            <div class="list__list-line-text">Make Frontend great again</div>-->
-<!--            <button class="list__line-delete-button">X</button>-->
-<!--        </div>-->
+<div class="main">
+    <h1 class="header"> ToDo List</h1>
+    <div class="list"></div>
+    <div class="new">
+        <input class="new__input" placeholder="New ToDo" />
+        <button class="new__button">Button</button>
     </div>
-    <div class="list__new">
-        <input class="list__new-input" placeholder="New ToDo" />
-        <button class="list__new-button">Button</button>
-    </div>
-    <div class="list__filter">
-        <a class="list__filter-chosen" name="All" href="#">All</a> | <a class="list__filter-value" name="Completed" href="#">Completed</a> | <a class="list__filter-value" name="Active" href="#">Active</a>
+    <div class="filter">
+        <a class="filter__value" name="All" href="?filter=All#All" >All</a> |
+        <a class="filter__value" name="Completed" href="?filter=Completed#Completed" >Completed</a> |
+        <a class="filter__value" name="Active" href="?filter=Active#Active" >Active</a>
     </div>
 </div>
 </body>
