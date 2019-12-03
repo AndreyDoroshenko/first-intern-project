@@ -6,7 +6,7 @@
   "scripts": {
     "test": "eslint . && tap test/*.js",
     "serve": "webpack-dev-server --watch",
-    "build": "echo 'No build command'"
+    "build": "webpack"
   },
   "author": "Timofey Kuznetsov <tima1702@gmail.com>",
   "license": "ISC",

@@ -69,7 +69,7 @@ const switchState = (id) => () => {
 function addTodoItem() {
   const newTodo = document.querySelector('.new__input');
   if (newTodo.value.match(/\w+/)) {
-    todoList.push({ id: (todoList[todoList.length - 1].id + 1), text: newTodo.value, isDone: false });
+    todoList.push({ id: (todoList[0] ? todoList[todoList.length - 1].id + 1 : 1), text: newTodo.value, isDone: false });
     const elem = createLine(todoList.length, newTodo.value, false);
     updateData(false);
     list.appendChild(elem);
