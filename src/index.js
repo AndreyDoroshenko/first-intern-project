@@ -19,11 +19,9 @@ function createLine(id, lineText, isDone) {
   if (input.checked === true) {
     div.classList.add('list-line');
     div.classList.add('list-line_completed');
-    //  div.className = 'list-line ' + 'list-line_completed';
   } else {
     div.classList.add('list-line');
     div.classList.add('list-line_active');
-    //  div.className = 'list-line ' + 'list-line_active';
   }
   div.appendChild(input);
   div.appendChild(text);
@@ -41,6 +39,7 @@ function updateData() {
 function getData() {
   return JSON.parse(window.localStorage.getItem('List')) || [];
 }
+
 //  Удаление строки списка по нажатию кнопки
 const deleteLine = (id) => () => {
   const div = document.getElementById('list-' + id);
