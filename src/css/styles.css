@@ -1,6 +1,7 @@
 body {
     padding: 0;
     margin: 0;
+    background-color: whitesmoke;
 }
 
 .logo {
@@ -11,60 +12,86 @@ body {
 }
 
 .main {
-    min-width: 100px;
-    max-width: 400px;
-    width: 40%;
+    min-width: 250px;
+    max-width: 450px;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     align-content: space-between;
     font-weight: bold;
+    margin-top: 1%;
     margin-right: auto;
     margin-left: auto;
 }
 
+.header {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    font-size: 150%;
+}
+
 .list {
-    margin-top: 5px;
+    max-width: inherit;
     width: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    font-weight: 200;
 }
-
-
 
 .list-line {
     display: flex;
-    margin-top: 5px;
+    max-width: inherit;
     width: 100%;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    margin-top: 10px;
+    background-color: white;
+    border-radius: 20px;
+    opacity: 60%;
+    transition: opacity 0.6s;
+    box-shadow: 0 4px 10px;
 }
 
-.list_active > .list-line_completed,
+.list_active > .list-line_completed > .list-line__text,
 .list_completed > .list-line_active {
-    display: none;
+    text-decoration: line-through;
+    opacity: 30%;
 }
 
-.header {
-    width: 100%;
-    text-align: left;
-    margin: 0;
+.list-line > .list-line__text {
+    opacity: 100%;
+}
+list_active .list-line__checkbox__image {
 }
 
 .list-line__text {
     flex-grow: 1;
     text-align: left;
+    font-size: 130%;
+    margin-left: 5px;
+    transition: opacity 0.6s;
 }
 
-.list-line___delete-button {
-
+.list-line__delete-button {
+    border-width: 1px;
+    border-color: gray;
+    background-color: whitesmoke;
+    font-weight: 700;
+    font-size: 90%;
+    color: gray;
+    padding: 1px 4px;
+    height: 100%;
 }
 
 .new {
-    margin-top: 3px;
+    margin-top: 10px;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -73,35 +100,105 @@ body {
     justify-content: space-between;
 }
 
-.list__filter {
+.new__input {
+    flex: 1 0 0;
+    font-size: 80%;
+    height: 100%;
+    margin: 0;
+    padding-top: 2px;
+    padding-bottom: 0px;
+}
+
+.new__button {
+    min-width: 80px;
+    height: 100%;
+    margin-left: 5%;
+    background-color: lightgrey;
+    font-weight: 700;
+    font-size: 80%;
+    padding: 6px 6px 6px 6px;
+    border-radius: 5px;
+
+}
+
+.filter {
     display: flex;
-    margin-top: 10px;
-    width: 60%;
+    margin-top: 5px;
+    width: 100%;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
 }
 
-
-.filter__value {
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.new__input {
-    flex: 1 0 0;
-}
-
-.new__button {
-    margin-left: 10px;
-}
-
-:target {
-    margin-left: 5px;
-    margin-right: 5px;
-    color: black;
+.filter__button__value {
     text-decoration: none;
+    font-size: 100%;
+    color: blue;
+}
+
+.filter__value__button {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
+    border-width: 3px;
+    border-style: inset;
+    border-radius: 17px;
+    border-color: blue;
+    background-color: blue;
+    color: white;
+}
+
+.filter__value:target > .filter__value__button {
+    background-color: white;
+    color: black;
+}
+
+.list-line__checkbox {
+    display: flex;
+    flex-flow: row;
+}
+
+.list-line__checkbox__check-mark {
+    display: none;
+}
+
+.list-line__checkbox__image {
+    display: block;
+    background-color: #fff;
+    border-width: 2px;
+    height: 20px;
+    border-radius: 50%;
+    width: 20px;
+    box-shadow: 0 2px 5px;
+}
+
+.list-line__checkbox__check-mark:checked + .list-line__checkbox__image:before {
+    content: '\2713';
+    display: inline-block;
+    color: white;
+    font-weight: 200;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+.list-line__checkbox__check-mark:checked + .list-line__checkbox__image {
+    background-color: green;
+}
+
+.add-new-button {
+    position: absolute;
+    bottom: 10%;
+    width: 50px;
+    height: 50px;
+    padding: 5px 5px;
+    border-radius: 50%;
+    border-width: 0px;
+    font-size: 50px;
+    font-weight: 100;
+    line-height: 25px;
+    background-color: dodgerblue;
+    color: white;
 }
 
 

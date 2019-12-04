@@ -7,17 +7,14 @@
 </head>
 <body>
 <div class="main">
-    <h1 class="header"> ToDo List</h1>
-    <div class="list"></div>
-    <div class="new">
-        <input class="new__input" placeholder="New ToDo" />
-        <button class="new__button">Button</button>
-    </div>
+    <h1 class="header"></h1>
     <div class="filter">
-        <a class="filter__value" name="All" href="?filter=All#All" >All</a> |
-        <a class="filter__value" name="Completed" href="?filter=Completed#Completed" >Completed</a> |
-        <a class="filter__value" name="Active" href="?filter=Active#Active" >Active</a>
+        <a class="filter__value" name="All" href="?filter=All#All" ><button class="filter__value__button">All</button></a>
+        <a class="filter__value" name="Completed" href="?filter=Completed#Completed" ><button class="filter__value__button">Completed</button></a>
+        <a class="filter__value" name="Active" href="?filter=Active#Active" ><button class="filter__value__button">Active</button></a>
     </div>
+    <div class="list"></div>
+    <button class="add-new-button" title="Add new task">&plus;</button>
 </div>
 </body>
 </html>
