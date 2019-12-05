@@ -75,20 +75,33 @@ const switchState = (id) => () => {
 
 //  Добавление новой строки списка
 function addTodoItem() {
-  const newTodo = window.prompt('Enter new task', 'New task');
-  console.log(newTodo);
-  if (newTodo !== null && newTodo !== 'New task') {
-    todoList.push({ id: (todoList[0] ? todoList[todoList.length - 1].id + 1 : 1), text: newTodo, isDone: false });
-    const elem = createLine(todoList.length, newTodo, false);
+  const newTodo = document.querySelector('.query-window__input');
+  if (newTodo.value.match(/\w+/g)) {
+    todoList.push({ id: (todoList[0] ? todoList[todoList.length - 1].id + 1 : 1), text: newTodo.value, isDone: false });
+    const elem = createLine(todoList.length, newTodo.value, false);
     updateData(false);
     list.appendChild(elem);
   }
-  //  newTodo.value = '';
+  const window = document.querySelector('.query');
+  window.classList.remove('query_active');
+  window.classList.add('query_disabled');
+  newTodo.value = '';
+}
+
+function showQueryWindow() {
+  const window = document.querySelector('.query');
+  window.classList.remove('query_disabled');
+  window.classList.add('query_active');
+}
+
+function cancelQueryWindow() {
+  const background = document.querySelector('.query');
+  background.classList.remove('query_active');
+  background.classList.add('query_disabled');
 }
 
 //  Установка фильтра на новое значение
 function setFilterTo(e) {
-  console.log(e.target);
   const activeFilter = e.target.name;
   updateListByFilter(activeFilter);
 }
@@ -132,15 +145,21 @@ function getUrlParameter(name) {
 
 // Добавление обработчика для кнопки добавления строки в список
 const addNewTodoButton = document.querySelector('.add-new-button');
-addNewTodoButton.addEventListener('click', addTodoItem);
+addNewTodoButton.addEventListener('click', showQueryWindow);
+
+const addTaskButton = document.querySelector('.query-window__button');
+addTaskButton.addEventListener('click', addTodoItem);
 
 //  Добавление обработчика для фильтра
 const filter = document.querySelector('.filter');
 filter.addEventListener('click', setFilterTo);
 
 //  Получение стартового значения для фильтра
-const activeFilterByQuery = getUrlParameter('filter');
+const activeFilterByQuery = getUrlParameter('filter') || 'All';
 updateListByFilter(activeFilterByQuery);
+
+const cancelQueryButton = document.querySelector('.query-background');
+cancelQueryButton.addEventListener('click', cancelQueryWindow);
 
 // Заполнение списка данными из LocalStorage
 const list = document.querySelector('.list');
