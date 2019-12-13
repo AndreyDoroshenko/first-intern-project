@@ -39,7 +39,10 @@ print.updateListByFilter(activeFilterByQuery);
 const cancelQueryButton = document.querySelector('.query-background');
 cancelQueryButton.addEventListener('click', print.cancelQueryWindow);
 
+const t = print.showLoading(300);
 store.getData('Andrey', '123').then(result => {
+  console.log(Date.now());
   print.showTodo(result);
+  clearTimeout(t);
   print.hideLoading();
 });

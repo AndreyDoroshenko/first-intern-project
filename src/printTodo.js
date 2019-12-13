@@ -20,13 +20,14 @@ function createLine(id, lineText, isDone) {
   //  button.classList.add('list-line__delete-button');
   text.innerText = lineText;
   //  button.innerText = '\u274C';
-  if (input.checked === true) {
-    div.classList.add('list-line');
-    div.classList.add('list-line_completed');
-  } else {
-    div.classList.add('list-line');
-    div.classList.add('list-line_active');
-  }
+  div.className = 'list-line list-line_' + ((input.checked) ? 'completed' : 'active');
+  // if (input.checked === true) {
+  //   div.classList.add('list-line');
+  //   div.classList.add('list-line_completed');
+  // } else {
+  //   div.classList.add('list-line');
+  //   div.classList.add('list-line_active');
+  // }
   label.appendChild(input);
   label.appendChild(snap);
   div.appendChild(text);
@@ -50,7 +51,7 @@ function updateListByFilter(filter) {
   const list = document.querySelector('.list');
   const header = document.querySelector('h1');
   header.innerHTML = filter + ' tasks';
-  list.className = `list list_${filter.toLowerCase()}`; // 'list' + (filter === 'Active') ? 'list_active' : (filter === 'Completed') ? 'list_completed' : '';
+  list.className = `list list_${filter.toLowerCase()}`;
 }
 
 function showQueryWindow() {
@@ -65,10 +66,13 @@ function cancelQueryWindow() {
   background.classList.add('query_disabled');
 }
 
-function showLoading() {
-  console.log('show loading');
-  const loadingScreen = document.querySelector('.loading');
-  loadingScreen.classList.remove('loading_disabled');
+function showLoading(delay) {
+  console.log(Date.now());
+  return window.setTimeout(() => {
+    console.log('show loading');
+    const loadingScreen = document.querySelector('.loading');
+    loadingScreen.classList.remove('loading_disabled');
+  }, delay);
 }
 
 function hideLoading() {
@@ -76,5 +80,19 @@ function hideLoading() {
   const loadingScreen = document.querySelector('.loading');
   loadingScreen.classList.add('loading_disabled');
 }
+
+// function showLoading() {
+//   console.log('show loading');
+//   const loadingScreen = document.querySelector('.loading');
+//   loadingScreen.classList.remove('loading_disabled');
+// }
+//
+// function hideLoading() {
+//   window.setTimeout(() => {
+//     console.log('hide loading after 0.3sec');
+//     const loadingScreen = document.querySelector('.loading');
+//     loadingScreen.classList.add('loading_disabled');
+//   }, 200);
+// }
 
 export { showTodo, updateListByFilter, showQueryWindow, cancelQueryWindow, showLoading, hideLoading };

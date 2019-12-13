@@ -1,7 +1,3 @@
-function saveTodoInLocalStorage(list) {
-  const serialList = JSON.stringify(list);
-  window.localStorage.setItem('List', serialList);
-}
 
 function getData(username, password) {
   const url = 'http://localhost:3001/api/todo-list/' + username + '/tasks?password=' + password;
@@ -22,7 +18,8 @@ function saveTask(username, text) {
   return window.fetch(url, {
     method: 'POST',
   })
-    .then(response => {
+    .then((err, response) => {
+      if (err) { return err; }
       if (!response.ok) {
         console.log('error, response status is:' + response.status);
       } else {
@@ -51,6 +48,11 @@ function updateTask(username, taskID) {
 
 function getDataFromLocalStorage() {
   return JSON.parse(window.localStorage.getItem('List'));
+}
+
+function saveTodoInLocalStorage(list) {
+  const serialList = JSON.stringify(list);
+  window.localStorage.setItem('List', serialList);
 }
 
 export { saveTodoInLocalStorage, getData, getDataFromLocalStorage, saveTask, updateTask };
