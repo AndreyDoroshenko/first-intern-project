@@ -1,6 +1,6 @@
 import { switchState } from './todoController';
 
-function createLine(id, lineText, isDone) {
+function createLine(id, lineText, isDone) { // uncomment line if you want to add delete button
   const div = document.createElement('div');
   div.id = 'list-' + id;
   const input = document.createElement('input');
@@ -21,13 +21,6 @@ function createLine(id, lineText, isDone) {
   text.innerText = lineText;
   //  button.innerText = '\u274C';
   div.className = 'list-line list-line_' + ((input.checked) ? 'completed' : 'active');
-  // if (input.checked === true) {
-  //   div.classList.add('list-line');
-  //   div.classList.add('list-line_completed');
-  // } else {
-  //   div.classList.add('list-line');
-  //   div.classList.add('list-line_active');
-  // }
   label.appendChild(input);
   label.appendChild(snap);
   div.appendChild(text);
@@ -75,24 +68,18 @@ function showLoading(delay) {
   }, delay);
 }
 
-function hideLoading() {
-  console.log('hide loading');
-  const loadingScreen = document.querySelector('.loading');
-  loadingScreen.classList.add('loading_disabled');
+function hideLoading(dateOfRequest, timeoutDelayEnd, timeoutID) {
+  console.log(dateOfRequest > timeoutDelayEnd);
+  if (dateOfRequest > timeoutDelayEnd) {
+    window.setTimeout(() => {
+      console.log('hide loading after 0.2sec');
+      const loadingScreen = document.querySelector('.loading');
+      loadingScreen.classList.add('loading_disabled');
+    }, 200);
+  } else {
+    console.log('loading spinner canceled');
+    clearTimeout(timeoutID);
+  }
 }
-
-// function showLoading() {
-//   console.log('show loading');
-//   const loadingScreen = document.querySelector('.loading');
-//   loadingScreen.classList.remove('loading_disabled');
-// }
-//
-// function hideLoading() {
-//   window.setTimeout(() => {
-//     console.log('hide loading after 0.3sec');
-//     const loadingScreen = document.querySelector('.loading');
-//     loadingScreen.classList.add('loading_disabled');
-//   }, 200);
-// }
 
 export { showTodo, updateListByFilter, showQueryWindow, cancelQueryWindow, showLoading, hideLoading };

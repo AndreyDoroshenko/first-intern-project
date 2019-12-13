@@ -2,27 +2,22 @@ import { updateListByFilter, showTodo, showLoading, hideLoading } from './printT
 import { getData, saveTask, updateTask } from './storeTodo';
 
 const switchState = (id) => () => {
-  // showLoading();
   const t = showLoading(200);
+  const date = Date.now() + 200;
   const line = document.getElementById('list-' + id);
   const input = line.lastChild.firstChild;
   line.className = 'list-line list-line_' + ((input.checked) ? 'completed' : 'active');
-  // if (input.checked) { // remake in 1 line
-  //   line.className = 'list-line ' + 'list-line_completed';
-  // } else {
-  //   line.className = 'list-line ' + 'list-line_active';
-  // }
   updateTask('Andrey', id).then(result => {
     if (result.message) {
       console.log(result.message);
     }
-    clearTimeout(t);
-    hideLoading();
+    hideLoading(Date.now(), date, t);
   });
 };
 
 function addTodoItem() {
   const t = showLoading(200);
+  const date = Date.now() + 200;
   const newTodo = document.querySelector('.query-window__input');
   if (newTodo.value.match(/\w+/g)) {
     const windowShading = document.querySelector('.query');
@@ -35,8 +30,7 @@ function addTodoItem() {
       getData('Andrey', '123')
         .then(result => {
           showTodo(result);
-          clearTimeout(t);
-          hideLoading();
+          hideLoading(Date.now(), date, t);
         });
     },
     );
